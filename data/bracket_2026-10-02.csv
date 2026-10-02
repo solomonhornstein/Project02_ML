@@ -1,0 +1,12 @@
+round,series,matchup,prediction,p_win_series,p_exact_result
+Wild Card,AL_WC_3v6,(AL 3) Houston Astros vs. (AL 6) Chicago White Sox,Chicago White Sox (final),,
+Wild Card,AL_WC_4v5,(AL 4) New York Yankees vs. (AL 5) Boston Red Sox,New York Yankees (final),,
+Division Series,AL_DS_1,(AL 1) Tampa Bay Rays vs. (AL 4) New York Yankees,New York Yankees in 4,0.5313312864653723,0.2125580076325987
+Division Series,AL_DS_2,(AL 2) Cleveland Guardians vs. (AL 6) Chicago White Sox,Chicago White Sox in 4,0.5219705639993895,0.20867481097899734
+Championship Series,AL_CS,(AL 4) New York Yankees vs. (AL 6) Chicago White Sox,New York Yankees in 6,0.579086594077618,0.18400994637899282
+Wild Card,NL_WC_3v6,(NL 3) Atlanta Braves vs. (NL 6) Philadelphia Phillies,Atlanta Braves (final),,
+Wild Card,NL_WC_4v5,(NL 4) San Diego Padres vs. (NL 5) Chicago Cubs,San Diego Padres (final),,
+Division Series,NL_DS_1,(NL 1) Milwaukee Brewers vs. (NL 4) San Diego Padres,Milwaukee Brewers in 4,0.6472166903906803,0.23231165508944573
+Division Series,NL_DS_2,(NL 2) Los Angeles Dodgers vs. (NL 3) Atlanta Braves,Los Angeles Dodgers in 5,0.5930995894200644,0.21221788887371054
+Championship Series,NL_CS,(NL 1) Milwaukee Brewers vs. (NL 2) Los Angeles Dodgers,Milwaukee Brewers in 7,0.5215486634736476,0.16756619216404373
+World Series,WS,(NL 1) Milwaukee Brewers vs. (AL 4) New York Yankees,Milwaukee Brewers in 6,0.5909109521032054,0.18726999800161537
