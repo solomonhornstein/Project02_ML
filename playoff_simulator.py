@@ -34,6 +34,9 @@ from data_loader import DataLoader
 from feature_builder import FeatureBuilder
 from game_model import GameModel
 
+from pitcher_features import PitcherFeatureBuilder
+from pitcher_loader import PitcherLoader
+
 # ---------------------------------------------------------------------------
 # Bracket from MLB.com. Team names must match your data exactly.
 # ---------------------------------------------------------------------------
@@ -64,10 +67,12 @@ IN_PROGRESS = {}
 
 MODEL_VERSIONS = {
     "v1": {"prior_games": 70, "features": ["diff_run_diff", "diff_last10"]},
-    # "v2": {...}  add when it's ready
+    "v2": {"prior_games": 70, "prior_innings": 30,
+           "features": ["diff_run_diff", "diff_last10", "diff_starter_fip"]},
 }
 MODEL_VERSION = "v1"
 PRIOR_GAMES = MODEL_VERSIONS[MODEL_VERSION]["prior_games"]
+PRIOR_INNINGS = MODEL_VERSIONS[MODEL_VERSION].get("prior_innings")  # None for V1
 FEATURES = MODEL_VERSIONS[MODEL_VERSION]["features"]
 N_SIMS = 10_000
 
@@ -104,6 +109,7 @@ class PlayoffSimulator:
                 "diff_win_pct": h["win_pct"] - a["win_pct"],
                 "diff_run_diff": h["run_diff"] - a["run_diff"],
                 "diff_last10": h["last10"] - a["last10"],
+                "diff_starter_fip": h.get("rotation_fip", 0) - a.get("rotation_fip", 0),
             }])
             self._cache[(home, away)] = self.model.win_prob(row)[0]
         return self._cache[(home, away)]
@@ -243,16 +249,30 @@ if __name__ == "__main__":
     random.seed(42)  # makes results reproducible from run to run
 
     games = DataLoader().load_games()
-    builder = FeatureBuilder(prior_games=PRIOR_GAMES)
-    features = builder.build(games)
+    if PRIOR_INNINGS is None:  # V1: team stats only
+        team_builder = FeatureBuilder(prior_games=PRIOR_GAMES)
+        features = team_builder.build(games)
+    else:  # V2: team stats + starting pitchers
+        starters = PitcherLoader().load_starters(games)
+        v2_builder = PitcherFeatureBuilder(prior_games=PRIOR_GAMES, prior_innings=PRIOR_INNINGS)
+        features = v2_builder.build(games, starters)
+        team_builder = v2_builder.team_builder
 
     # Train on the whole regular season (split date after the season ends).
     model = GameModel(features=FEATURES, split_date="2027-01-01")
     train, _ = model.split(features)
     model.train(train)
 
-    ratings = builder.team_ratings()
-    records = {t: s["wins"] / s["games"] for t, s in builder.teams.items()}
+    ratings = team_builder.team_ratings()
+    records = {t: s["wins"] / s["games"] for t, s in team_builder.teams.items()}
+
+    if PRIOR_INNINGS is not None:
+        # Playoff starters aren't known in advance: rate each team's top-4 rotation.
+        rotations = v2_builder.team_rotations(top_n=4)
+        ratings["rotation_fip"] = rotations.reindex(ratings.index).fillna(rotations.mean())
+        playoff_teams = [t for d in SEEDS.values() for t in d.values()]
+        print("Playoff rotation FIP (top 4 starters, lower is better):")
+        print(rotations.reindex(playoff_teams).sort_values().round(3), "\n")
     check_names(SEEDS, set(ratings.index))
 
     sim = PlayoffSimulator(SEEDS, model, ratings, records, RESULTS, IN_PROGRESS)
