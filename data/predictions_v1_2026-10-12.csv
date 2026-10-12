@@ -1,0 +1,13 @@
+team,league,seed,P(Division Series),P(LCS),P(World Series),P(Champion)
+Milwaukee Brewers,NL,1,1.0,1.0,0.514,0.338
+Los Angeles Dodgers,NL,2,1.0,1.0,0.486,0.3174
+Tampa Bay Rays,AL,1,1.0,1.0,0.5684,0.2072
+Cleveland Guardians,AL,2,1.0,1.0,0.4316,0.1374
+Houston Astros,AL,3,0.0,0.0,0.0,0.0
+New York Yankees,AL,4,1.0,0.0,0.0,0.0
+Boston Red Sox,AL,5,0.0,0.0,0.0,0.0
+Chicago White Sox,AL,6,1.0,0.0,0.0,0.0
+Atlanta Braves,NL,3,1.0,0.0,0.0,0.0
+San Diego Padres,NL,4,1.0,0.0,0.0,0.0
+Chicago Cubs,NL,5,0.0,0.0,0.0,0.0
+Philadelphia Phillies,NL,6,0.0,0.0,0.0,0.0

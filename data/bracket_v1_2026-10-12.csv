@@ -1,0 +1,12 @@
+round,series,matchup,prediction,p_win_series,p_exact_result
+Wild Card,AL_WC_3v6,(AL 3) Houston Astros vs. (AL 6) Chicago White Sox,Chicago White Sox (final),,
+Wild Card,AL_WC_4v5,(AL 4) New York Yankees vs. (AL 5) Boston Red Sox,New York Yankees (final),,
+Division Series,AL_DS_1,(AL 1) Tampa Bay Rays vs. (AL 4) New York Yankees,Tampa Bay Rays (final),,
+Division Series,AL_DS_2,(AL 2) Cleveland Guardians vs. (AL 6) Chicago White Sox,Cleveland Guardians (final),,
+Championship Series,AL_CS,(AL 1) Tampa Bay Rays vs. (AL 2) Cleveland Guardians,Tampa Bay Rays in 6,0.5683390140489917,0.18099961565591294
+Wild Card,NL_WC_3v6,(NL 3) Atlanta Braves vs. (NL 6) Philadelphia Phillies,Atlanta Braves (final),,
+Wild Card,NL_WC_4v5,(NL 4) San Diego Padres vs. (NL 5) Chicago Cubs,San Diego Padres (final),,
+Division Series,NL_DS_1,(NL 1) Milwaukee Brewers vs. (NL 4) San Diego Padres,Milwaukee Brewers (final),,
+Division Series,NL_DS_2,(NL 2) Los Angeles Dodgers vs. (NL 3) Atlanta Braves,Los Angeles Dodgers (final),,
+Championship Series,NL_CS,(NL 1) Milwaukee Brewers vs. (NL 2) Los Angeles Dodgers,Milwaukee Brewers in 7,0.5215486634736476,0.16756619216404373
+World Series,WS,(NL 1) Milwaukee Brewers vs. (AL 1) Tampa Bay Rays,Milwaukee Brewers in 6,0.6382953648979236,0.1997020873236614

@@ -30,6 +30,7 @@ import pandas as pd
 # Kalshi "Pro Baseball Champion" Yes prices. Update these whenever you
 # capture new odds, and record when you captured them.
 # ---------------------------------------------------------------------------
+MODEL_VERSION = "v1"  # which model's predictions to compare
 MARKET_CAPTURED = "2026-10-02"
 MARKET_YES = {
     "Los Angeles Dodgers": 0.301,
@@ -62,8 +63,8 @@ class MarketComparison:
         if missing:
             raise ValueError(f"No market price entered for: {sorted(missing)}")
 
-        total = sum(self.market_yes.values())
         df["market_raw"] = df["team"].map(self.market_yes)
+        total = df["market_raw"].sum()  # only teams still alive
         df["market"] = df["market_raw"] / total       # normalized to sum to 100%
         df["model_minus_market"] = df["model"] - df["market"]
         return df.sort_values("market", ascending=False).reset_index(drop=True)
@@ -101,7 +102,7 @@ class MarketComparison:
 
 
 def latest_predictions():
-    files = sorted(glob.glob("data/predictions_*.csv"))  # dates sort correctly
+    files = sorted(glob.glob(f"data/predictions_{MODEL_VERSION}_*.csv"))  # dates sort correctly
     if not files:
         raise FileNotFoundError("Run playoff_simulator.py first.")
     return files[-1], pd.read_csv(files[-1])
@@ -123,12 +124,12 @@ if __name__ == "__main__":
     shown["model_minus_market"] = table["model_minus_market"].map(lambda v: f"{v:+.1%}")
     print(shown.to_string(index=False))
 
-    out = f"data/market_comparison_{MARKET_CAPTURED}.csv"
+    out = f"data/market_comparison_{MODEL_VERSION}_{MARKET_CAPTURED}.csv"
     table.to_csv(out, index=False)
     print(f"\nSaved {out}")
 
     try:
-        chart_path = f"data/model_vs_market_{MARKET_CAPTURED}.png"
+        chart_path = f"data/model_vs_market_{MODEL_VERSION}_{MARKET_CAPTURED}.png"
         MarketComparison.chart(table, chart_path)
         print(f"Saved {chart_path}")
     except ImportError:

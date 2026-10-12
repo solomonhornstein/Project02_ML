@@ -52,14 +52,23 @@ RESULTS = {
     "AL_WC_4v5": "New York Yankees",
     "NL_WC_4v5": "San Diego Padres",
     "NL_WC_3v6": "Atlanta Braves",
+    "AL_DS_1": "Tampa Bay Rays",
+    "AL_DS_2": "Cleveland Guardians",
+    "NL_DS_1": "Milwaukee Brewers",
+    "NL_DS_2": "Los Angeles Dodgers",
 }
 
 # Series in progress: series key -> (higher seed's wins, lower seed's wins)
 # Example: IN_PROGRESS = {"AL_DS_1": (1, 0)}
 IN_PROGRESS = {}
 
-PRIOR_GAMES = 70
-FEATURES = ["diff_run_diff", "diff_last10"]
+MODEL_VERSIONS = {
+    "v1": {"prior_games": 70, "features": ["diff_run_diff", "diff_last10"]},
+    # "v2": {...}  add when it's ready
+}
+MODEL_VERSION = "v1"
+PRIOR_GAMES = MODEL_VERSIONS[MODEL_VERSION]["prior_games"]
+FEATURES = MODEL_VERSIONS[MODEL_VERSION]["features"]
 N_SIMS = 10_000
 
 # Which team hosts each game: "H" = higher seed at home, "L" = lower seed at home.
@@ -267,7 +276,8 @@ if __name__ == "__main__":
     print(table.to_string(index=False, float_format=pct))
 
     today = date.today()
-    bracket.to_csv(f"data/bracket_{today}.csv", index=False)
-    table.to_csv(f"data/predictions_{today}.csv", index=False)
-    print(f"\nSaved data/bracket_{today}.csv and data/predictions_{today}.csv."
+    bracket.to_csv(f"data/bracket_{MODEL_VERSION}_{today}.csv", index=False)
+    table.to_csv(f"data/predictions_{MODEL_VERSION}_{today}.csv", index=False)
+    print(f"\nSaved data/bracket_{MODEL_VERSION}_{today}.csv and "
+          f"data/predictions_{MODEL_VERSION}_{today}.csv."
           " Commit them before the next games start!")
