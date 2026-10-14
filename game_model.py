@@ -13,7 +13,7 @@ Log loss and Brier matter most here, because the playoff simulator relies on
 the model's PROBABILITIES, not just its picks.
 
 AI USE NOTE (required by DA Honor Code): This class was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 
 Setup:  pip install scikit-learn
 """

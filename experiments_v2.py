@@ -11,7 +11,7 @@ Same three-way split as experiments.py:
   TEST:        August 15 onward             -> check the finalists ONCE
 
 AI USE NOTE (required by DA Honor Code): This script was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 """
 
 import pandas as pd

@@ -15,7 +15,7 @@ Those rows are kept, but the starter's outs show it. Worth deciding later
 whether to treat very short starts differently.
 
 AI USE NOTE (required by DA Honor Code): This class was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 """
 
 import os

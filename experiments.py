@@ -9,7 +9,7 @@ If we picked the best of many settings by their TEST scores, the winner would
 look better partly by luck. Keeping the test set untouched avoids that.
 
 AI USE NOTE (required by DA Honor Code): This script was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 """
 
 import pandas as pd

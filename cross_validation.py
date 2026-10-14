@@ -17,7 +17,7 @@ that could be luck. If the difference is more than about 2 standard errors
 from zero, it's unlikely to be luck.
 
 AI USE NOTE (required by DA Honor Code): This script was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 """
 
 import numpy as np

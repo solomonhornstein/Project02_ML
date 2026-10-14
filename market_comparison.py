@@ -16,7 +16,7 @@ SCORING: after the World Series, set CHAMPION and rerun. The script scores
 the model and the market using log loss and Brier score (lower is better).
 
 AI USE NOTE (required by DA Honor Code): This script was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 
 Optional chart:  pip install matplotlib
 """

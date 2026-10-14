@@ -21,7 +21,7 @@ IN_PROGRESS, then rerun. Commit the output BEFORE each round starts, so the
 Git timestamps prove the predictions weren't made with hindsight.
 
 AI USE NOTE (required by DA Honor Code): This class was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 """
 
 import random
@@ -64,13 +64,14 @@ RESULTS = {
 # Series in progress: series key -> (higher seed's wins, lower seed's wins)
 # Example: IN_PROGRESS = {"AL_DS_1": (1, 0)}
 IN_PROGRESS = {}
+PRE_PLAYOFF = False  # True = ignore all results; predict the whole postseason from the start
 
 MODEL_VERSIONS = {
     "v1": {"prior_games": 70, "features": ["diff_run_diff", "diff_last10"]},
     "v2": {"prior_games": 70, "prior_innings": 30,
            "features": ["diff_run_diff", "diff_last10", "diff_starter_fip"]},
 }
-MODEL_VERSION = "v1"
+MODEL_VERSION = "v2"
 PRIOR_GAMES = MODEL_VERSIONS[MODEL_VERSION]["prior_games"]
 PRIOR_INNINGS = MODEL_VERSIONS[MODEL_VERSION].get("prior_innings")  # None for V1
 FEATURES = MODEL_VERSIONS[MODEL_VERSION]["features"]
@@ -275,7 +276,9 @@ if __name__ == "__main__":
         print(rotations.reindex(playoff_teams).sort_values().round(3), "\n")
     check_names(SEEDS, set(ratings.index))
 
-    sim = PlayoffSimulator(SEEDS, model, ratings, records, RESULTS, IN_PROGRESS)
+    results = {} if PRE_PLAYOFF else RESULTS
+    in_progress = {} if PRE_PLAYOFF else IN_PROGRESS
+    sim = PlayoffSimulator(SEEDS, model, ratings, records, results, in_progress)
     pd.set_option("display.width", 160)
     pd.set_option("display.max_colwidth", 80)
 
@@ -296,8 +299,9 @@ if __name__ == "__main__":
     print(table.to_string(index=False, float_format=pct))
 
     today = date.today()
-    bracket.to_csv(f"data/bracket_{MODEL_VERSION}_{today}.csv", index=False)
-    table.to_csv(f"data/predictions_{MODEL_VERSION}_{today}.csv", index=False)
-    print(f"\nSaved data/bracket_{MODEL_VERSION}_{today}.csv and "
-          f"data/predictions_{MODEL_VERSION}_{today}.csv."
+    prefix = "preplayoff_" if PRE_PLAYOFF else ""
+    bracket.to_csv(f"data/{prefix}bracket_{MODEL_VERSION}_{today}.csv", index=False)
+    table.to_csv(f"data/{prefix}predictions_{MODEL_VERSION}_{today}.csv", index=False)
+    print(f"\nSaved data/{prefix}bracket_{MODEL_VERSION}_{today}.csv and "
+          f"data/{prefix}predictions_{MODEL_VERSION}_{today}.csv."
           " Commit them before the next games start!")

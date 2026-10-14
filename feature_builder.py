@@ -11,7 +11,7 @@ baseball and zero run differential. This pulls small-sample stats toward league
 average (a 3-0 team looks like ~.565, not 1.000) and fades as real games pile up.
 
 AI USE NOTE (required by DA Honor Code): This class was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 """
 
 from collections import defaultdict, deque

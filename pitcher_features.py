@@ -19,7 +19,7 @@ SUSPENDED GAMES: game 824912 appears twice in the schedule (started 6/16,
 finished 6/17). V2 keeps only the completion date. V1 is left unchanged.
 
 AI USE NOTE (required by DA Honor Code): This class was drafted with help from
-Claude (Anthropic). [Add your own notes on what you changed or wrote yourself.]
+Claude (Anthropic).
 """
 
 from collections import defaultdict

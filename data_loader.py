@@ -2,9 +2,7 @@
 data_loader.py - Fetches MLB game results from MLB's official Stats API.
 
 AI USE NOTE (required by DA Honor Code): The structure of this class was
-drafted with help from Claude (Anthropic). I used it to learn how to call
-the MLB-StatsAPI library and cache results. [Add your own notes on what
-you changed or wrote yourself.]
+drafted with help from Claude (Anthropic).
 
 Setup:  pip install MLB-StatsAPI pandas
 """
