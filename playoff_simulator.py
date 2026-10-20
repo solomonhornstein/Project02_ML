@@ -59,13 +59,11 @@ RESULTS = {
     "AL_DS_2": "Cleveland Guardians",
     "NL_DS_1": "Milwaukee Brewers",
     "NL_DS_2": "Los Angeles Dodgers",
+    "AL_CS": "Tampa Bay Rays",
     "NL_CS": "Milwaukee Brewers",
 }
 
-# Series in progress: series key -> (higher seed's wins, lower seed's wins)
-IN_PROGRESS = {
-    "AL_CS": (2, 2),   # Rays (AL 1) vs. Guardians (AL 2)
-}
+IN_PROGRESS = {}
 
 PRE_PLAYOFF = False  # True = ignore all results; predict the whole postseason from the start
 
