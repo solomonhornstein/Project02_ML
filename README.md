@@ -139,7 +139,6 @@ Every snapshot was committed to GitHub before the games it predicts. Commit time
 | V2, Oct 12: ALCS | Rays in 6 | 57.0% | Rays 4–2 | ✓ exact |
 | V2, Oct 12: NLCS | Brewers in 6 | 53.6% | Brewers 4–0 | ✓ winner |
 | V2, Oct 12: World Series | Brewers in 6 | 63.3% | Brewers 4–1 | ✓ winner |
-| V2, Oct 19: World Series | Brewers in 6 | 63.3% | Brewers 4–1 | ✓ winner |
 | V1, Oct 2: AL pennant | Yankees | 57.9% | Rays | ✗ |
 | V1, Oct 2: NL pennant | Brewers | 52.2% | Brewers | ✓ |
 | V1, Oct 2: World Series | Brewers | 59.1% | Brewers | ✓ |
