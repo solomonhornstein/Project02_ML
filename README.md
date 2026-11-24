@@ -2,6 +2,8 @@
 
 A machine learning model that learns from the 2026 regular season and predicts the 2026 MLB playoffs, series by series, with predictions committed to GitHub *before* the games were played. The model's World Series odds are also compared against a real prediction market (Kalshi).
 
+**Final result:** every committed snapshot picked the **Milwaukee Brewers** to win the World Series, and they did, beating the Rays 4–1. The final model (V2) also called the ALCS exactly: Rays over Guardians in 6.
+
 ---
 
 ## How it works
@@ -19,8 +21,8 @@ As a check, the two methods agree to within about a percentage point (e.g., Rays
 
 | Version | Features | Status |
 |---|---|---|
-| **V1** | Team run differential per game, last-10-games record (home minus away) | Official, frozen at Git tag `v1` |
-| **V2** | V1 + starting pitcher quality (FIP) | Runs alongside V1 |
+| **V1** | Team run differential per game, last-10-games record (home minus away) | Baseline, frozen at Git tag `v1` |
+| **V2** | V1 + starting pitcher quality (FIP) | **Final model** |
 
 Both versions use logistic regression (scikit-learn). Switch between them with `MODEL_VERSION` in `playoff_simulator.py` and `market_comparison.py`.
 
@@ -125,8 +127,35 @@ Every snapshot was committed to GitHub before the games it predicts. Commit time
 | Before Division Series (Oct 2) | V1 | First full bracket prediction |
 | Before ALCS Game 1 (Oct 12) | V1, V2 | NLCS shown as pre-series but generated after NLCS Game 1 was played |
 | Retrospective from the start (generated Oct 14) | V1, V2 | **Not a prediction:** generated after the fact; saved as `preplayoff_` files |
+| Before World Series Game 1 (Oct 19) | V2 | Final prediction: Brewers in 6 (63.3%) |
+| V2 as of Oct 2 (generated after the fact) | V2 | **Not a prediction:** only the Wild Card results entered, to compare fairly with Kalshi's Oct 2 prices; saved as `asof_oct2_` files |
 
-**V2 predictions before ALCS Game 1:** Rays over Guardians in 6 (57.0%), Brewers over Dodgers in 6 (53.6%), Brewers win the World Series in 6. Title odds: Brewers 34.8%, Dodgers 29.5%, Rays 21.8%, Guardians 13.9%.
+### Final scorecard
+
+**World Series: Brewers beat Rays 4–1** (Brewers' first title; 11–2 in the postseason).
+
+| Snapshot | Pick | Confidence | Actual | Result |
+|---|---|---|---|---|
+| V2, Oct 12: ALCS | Rays in 6 | 57.0% | Rays 4–2 | ✓ exact |
+| V2, Oct 12: NLCS | Brewers in 6 | 53.6% | Brewers 4–0 | ✓ winner |
+| V2, Oct 12: World Series | Brewers in 6 | 63.3% | Brewers 4–1 | ✓ winner |
+| V2, Oct 19: World Series | Brewers in 6 | 63.3% | Brewers 4–1 | ✓ winner |
+| V1, Oct 2: AL pennant | Yankees | 57.9% | Rays | ✗ |
+| V1, Oct 2: NL pennant | Brewers | 52.2% | Brewers | ✓ |
+| V1, Oct 2: World Series | Brewers | 59.1% | Brewers | ✓ |
+
+**The Brewers were the model's favorite to win it all in every snapshot**, from both versions:
+
+| Snapshot | Brewers' title odds | Rank |
+|---|---|---|
+| V1, Oct 2 (8 teams left) | 23.5% | 1st |
+| V1, Oct 12 (4 teams left) | 33.8% | 1st |
+| V2, Oct 12 (4 teams left) | 34.8% | 1st |
+| V2, Oct 19 (2 teams left) | 63.1% | 1st |
+
+The predicted series lengths were mostly wrong (the Brewers won the NLCS in 4 and the World Series in 5, not 6). That's expected: the single most likely length usually has only about a 17–20% chance. Picking the winner is what the model is built for.
+
+**V1 vs. V2 in the Division Series:** V1 (committed Oct 2) went 2 for 4. V2, run afterward with only the information available on Oct 2, went 3 for 4; the difference is that V2's rotation ratings picked the Guardians over the White Sox, in 5 games, which is exactly what happened. V2's Division Series picks were generated after the fact, so they're supporting evidence, not proof.
 
 ### Division Series report card (V1, predicted Oct 2)
 
@@ -158,7 +187,17 @@ Kalshi "Pro Baseball Champion" prices captured Oct 2, normalized to 100%:
 
 The biggest disagreements were at the top. The market made the Dodgers the clear favorite, while V1 preferred the Brewers, whose run differential was the best in baseball. V1 also liked the White Sox much more than the market did; they were eliminated by Cleveland. The market can price in things V1 can't see, like injuries and playoff rotations, which is part of why V2 adds starting pitching.
 
-**Status at submission (Oct 14, 2026):** the Championship Series were still in progress, so LCS and World Series results aren't included here. Once the champion is known, setting `CHAMPION` in `market_comparison.py` scores both models against the market.
+### Final score against the market
+
+With `CHAMPION = "Milwaukee Brewers"`, `market_comparison.py` scores each set of Oct 2 title odds against what happened (lower is better):
+
+| Source (Oct 2) | Brewers' title odds | Log loss | Brier score |
+|---|---|---|---|
+| **V2** (as of Oct 2, generated after the fact) | 24.7% | **1.399** | **0.664** |
+| V1 (committed Oct 2) | 23.5% | 1.449 | 0.683 |
+| Kalshi (normalized) | 16.3% | 1.814 | 0.838 |
+
+Both versions beat the market on this postseason, because both made the eventual champion their favorite while Kalshi had them third. **This is one outcome, so it doesn't prove the model is better than the market**: a market that loses on a single season can easily be right more often over many. Testing that would take several postseasons.
 
 ---
 
@@ -166,7 +205,7 @@ The biggest disagreements were at the top. The market made the Dodgers the clear
 
 - **No injury or lineup information.** The model only sees regular-season stats. The market knows about injuries and planned rotations; the model doesn't.
 - **Rotation estimate.** V2 uses each team's top four starters by innings, which may not match who actually starts in the playoffs.
-- **Small samples.** Even cross-validation leaves the V2 improvement short of statistically conclusive, and one postseason is a single outcome, so whoever "wins" the market comparison may have been partly lucky.
+- **Small samples.** Even cross-validation leaves the V2 improvement short of statistically conclusive, and one postseason is a single outcome, so the model beating the market this year may have been partly lucky.
 - **Suspended game in V1.** Game 824912 (started June 16, finished June 17) appears twice in MLB's schedule data, so V1 counts it twice. This is 1 of 2,428 games and V1 was left unchanged to stay frozen; V2 counts it once, dated by completion.
 - **LCS home field** is assigned to the better seed; this rule wasn't independently verified.
 

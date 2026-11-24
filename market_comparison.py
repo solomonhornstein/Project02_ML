@@ -30,7 +30,7 @@ import pandas as pd
 # Kalshi "Pro Baseball Champion" Yes prices. Update these whenever you
 # capture new odds, and record when you captured them.
 # ---------------------------------------------------------------------------
-MODEL_VERSION = "v1"  # which model's predictions to compare
+MODEL_VERSION = "v2"  # which model's predictions to compare
 MARKET_CAPTURED = "2026-10-02"
 MARKET_YES = {
     "Los Angeles Dodgers": 0.301,
@@ -43,7 +43,7 @@ MARKET_YES = {
     "Chicago White Sox": 0.053,
 }
 
-CHAMPION = None  # after the World Series, e.g. CHAMPION = "Milwaukee Brewers"
+CHAMPION = "Milwaukee Brewers"
 
 
 class MarketComparison:
@@ -102,7 +102,7 @@ class MarketComparison:
 
 
 def latest_predictions():
-    files = sorted(glob.glob(f"data/predictions_{MODEL_VERSION}_*.csv"))  # dates sort correctly
+    files = ["data/asof_oct2_predictions_v2.csv"]
     if not files:
         raise FileNotFoundError("Run playoff_simulator.py first.")
     return files[-1], pd.read_csv(files[-1])

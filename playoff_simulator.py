@@ -61,8 +61,8 @@ RESULTS = {
     "NL_DS_2": "Los Angeles Dodgers",
     "AL_CS": "Tampa Bay Rays",
     "NL_CS": "Milwaukee Brewers",
+    "WS": "Milwaukee Brewers",
 }
-
 IN_PROGRESS = {}
 
 PRE_PLAYOFF = False  # True = ignore all results; predict the whole postseason from the start
