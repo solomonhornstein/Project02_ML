@@ -242,7 +242,7 @@ The only AI I used was Claude (Anthropic), in a single ongoing chat. I did not u
 
 **What I did:**
 - Chose the project idea and the decisions listed under "Decisions I made."
-- Set up the PyCharm project, virtual environment, and private GitHub repository, and added my teacher as a collaborator.
+- Set up the PyCharm project, virtual environment, and GitHub repository, and added my teacher as a collaborator.
 - Ran every script, checked each output for problems (for example, noticing results that needed explaining), and sent results back to decide on next steps.
 - Entered the playoff bracket and results from MLB.com and captured the Kalshi market odds.
 - Committed and pushed every version and prediction snapshot, and tagged V1.
